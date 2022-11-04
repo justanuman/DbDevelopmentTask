@@ -1,0 +1,112 @@
+package com.hotel.entity;
+
+import javax.persistence.*;
+import java.sql.Timestamp;
+import java.util.Objects;
+
+@Entity
+@Table(name = "reservation", schema = "dbdev", catalog = "")
+public class DbReservation {
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @Column(name = "ID")
+    private Integer id;
+    @Basic
+    @Column(name = "arrival")
+    private Timestamp arrival;
+    @Basic
+    @Column(name = "depart")
+    private Timestamp depart;
+    @Basic
+    @Column(name = "bookerID")
+    private String bookerId;
+    @Basic
+    @Column(name = "roomNumber")
+    private String roomNumber;
+    @Basic
+    @Column(name = "created")
+    private Timestamp created;
+    @Basic
+    @Column(name = "number_of_occupants")
+    private Integer numberOfOccupants;
+    @Basic
+    @Column(name = "status")
+    private String status;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Timestamp getArrival() {
+        return arrival;
+    }
+
+    public void setArrival(Timestamp arrival) {
+        this.arrival = arrival;
+    }
+
+    public Timestamp getDepart() {
+        return depart;
+    }
+
+    public void setDepart(Timestamp depart) {
+        this.depart = depart;
+    }
+
+    public String getBookerId() {
+        return bookerId;
+    }
+
+    public void setBookerId(String bookerId) {
+        this.bookerId = bookerId;
+    }
+
+    public String getRoomNumber() {
+        return roomNumber;
+    }
+
+    public void setRoomNumber(String roomNumber) {
+        this.roomNumber = roomNumber;
+    }
+
+    public Timestamp getCreated() {
+        return created;
+    }
+
+    public void setCreated(Timestamp created) {
+        this.created = created;
+    }
+
+    public Integer getNumberOfOccupants() {
+        return numberOfOccupants;
+    }
+
+    public void setNumberOfOccupants(Integer numberOfOccupants) {
+        this.numberOfOccupants = numberOfOccupants;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        DbReservation that = (DbReservation) o;
+        return Objects.equals(id, that.id) && Objects.equals(arrival, that.arrival) && Objects.equals(depart, that.depart) && Objects.equals(bookerId, that.bookerId) && Objects.equals(roomNumber, that.roomNumber) && Objects.equals(created, that.created) && Objects.equals(numberOfOccupants, that.numberOfOccupants) && Objects.equals(status, that.status);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, arrival, depart, bookerId, roomNumber, created, numberOfOccupants, status);
+    }
+}
