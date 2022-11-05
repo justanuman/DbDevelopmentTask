@@ -1,0 +1,13 @@
+package com.hotel.ver2.repo;
+
+import com.hotel.ver2.entity.DbRoom;
+import org.springframework.data.repository.PagingAndSortingRepository;
+
+import java.math.BigDecimal;
+import java.util.List;
+
+public interface DbRoomRepo  extends PagingAndSortingRepository<DbRoom,String> {
+    List<DbRoom> findAllById(String id);
+    List<DbRoom> findAllByRateBetween(BigDecimal one,BigDecimal two);
+    List<DbRoom> findAllBySize(Integer size);
+}

@@ -1,4 +1,4 @@
-package com.hotel.dto;
+package com.hotel.ver2.dto;
 
 import lombok.Data;
 
