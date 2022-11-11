@@ -5,7 +5,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "statustable", schema = "dbdev", catalog = "")
-public class DbStatustable {
+public class DbStatusTable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "status")
@@ -23,7 +23,7 @@ public class DbStatustable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        DbStatustable that = (DbStatustable) o;
+        DbStatusTable that = (DbStatusTable) o;
         return Objects.equals(status, that.status);
     }
 

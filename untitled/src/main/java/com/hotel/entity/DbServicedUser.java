@@ -6,7 +6,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "servicedusers", schema = "dbdev", catalog = "")
-public class DbServiceduser {
+public class DbServicedUser {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "ID")
@@ -79,7 +79,7 @@ public class DbServiceduser {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        DbServiceduser that = (DbServiceduser) o;
+        DbServicedUser that = (DbServicedUser) o;
         return Objects.equals(id, that.id) && Objects.equals(username, that.username) && Objects.equals(servicename, that.servicename) && Objects.equals(status, that.status) && Objects.equals(created, that.created) && Objects.equals(updated, that.updated);
     }
 
