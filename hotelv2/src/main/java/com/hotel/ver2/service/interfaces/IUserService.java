@@ -15,15 +15,15 @@ public interface IUserService {
 
     DbUser register(DbUserDto userData);
 
-    @PreAuthorize("hasRole(ROLE_USER) and #id == authentication.principal.id")
+    //@PreAuthorize("hasRole(ROLE_USER) and #id == authentication.principal.id")
     DbUserDto updateProfile(Integer id, DbUserDto userProfileDto, DbUser user);
     List<DbUserDto> getAdmins();
     List<DbUserDto> getBills();
 
 
-    @PreAuthorize("hasRole(ROLE_ADMIN) or hasRole(ROLE_MODERATOR)")
+   // @PreAuthorize("hasRole(ROLE_ADMIN) or hasRole(ROLE_MODERATOR)")
     DbUserDto deactivateUser(int id,  Principal principal);
-    @PreAuthorize("hasRole(ROLE_ADMIN) or hasRole(ROLE_MODERATOR)")
+  //  @PreAuthorize("hasRole(ROLE_ADMIN) or hasRole(ROLE_MODERATOR)")
     DbUserDto promoteUser(DbUser user);
 
    /* @PreAuthorize("hasRole(ROLE_ADMIN)")

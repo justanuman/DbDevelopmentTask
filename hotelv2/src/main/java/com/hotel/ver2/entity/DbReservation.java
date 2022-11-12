@@ -1,12 +1,19 @@
 package com.hotel.ver2.entity;
 
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.Objects;
 
+@Builder
+@Data
 @Entity
 @Table(name = "reservation", schema = "dbdev")
-public class DbReservation {
+public class DbReservation implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "ID")
@@ -32,6 +39,7 @@ public class DbReservation {
     @Basic
     @Column(name = "status")
     private String status;
+
 
     public Integer getId() {
         return id;

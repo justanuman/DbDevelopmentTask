@@ -30,7 +30,6 @@ DbUserRepo dbUserRepo;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-       // DbUser user = userService.findByUsername(username);
         DbUser user = dbUserRepo.findById(username).orElse(null);
         if (user == null) {
             throw new UsernameNotFoundException("username: " + username + " not found");
