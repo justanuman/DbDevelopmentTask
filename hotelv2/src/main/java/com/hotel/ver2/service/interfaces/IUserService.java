@@ -2,10 +2,9 @@ package com.hotel.ver2.service.interfaces;
 
 import com.hotel.ver2.dto.DbUserDto;
 import com.hotel.ver2.entity.DbUser;
-import org.springframework.security.access.prepost.PreAuthorize;
+import com.hotel.ver2.entity.DbUserRoles;
 import org.springframework.stereotype.Component;
 
-import java.security.Principal;
 import java.util.List;
 
 @Component
@@ -16,15 +15,15 @@ public interface IUserService {
     DbUser register(DbUserDto userData);
 
     //@PreAuthorize("hasRole(ROLE_USER) and #id == authentication.principal.id")
-    DbUserDto updateProfile(Integer id, DbUserDto userProfileDto, DbUser user);
-    List<DbUserDto> getAdmins();
-    List<DbUserDto> getBills();
+   // DbUserDto updateProfile(Integer id, DbUserDto userProfileDto, DbUser user);
+    List<DbUserRoles> getAdmins();
+    List<DbUser> getBills();
 
 
    // @PreAuthorize("hasRole(ROLE_ADMIN) or hasRole(ROLE_MODERATOR)")
-    DbUserDto deactivateUser(int id,  Principal principal);
+   // DbUserDto deactivateUser(int id,  Principal principal);
   //  @PreAuthorize("hasRole(ROLE_ADMIN) or hasRole(ROLE_MODERATOR)")
-    DbUserDto promoteUser(DbUser user);
+    String promoteUser(String ID);
 
    /* @PreAuthorize("hasRole(ROLE_ADMIN)")
     UserDto deactivateModerator(int id, DbUser user);

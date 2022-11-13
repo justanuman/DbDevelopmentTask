@@ -5,6 +5,8 @@ import com.hotel.ver2.entity.DbReservation;
 import com.hotel.ver2.repo.DbReservationRepo;
 import com.hotel.ver2.service.interfaces.IReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,7 +23,7 @@ public class ReservationService implements IReservationService {
 
     @Override
     public DbReservation reserveARoom(DbReservationDto dbReservationDto) {
-        List<DbReservation> activeReservationsInRoom = dbReservationDAO.findAllByRoomNumberAndDepartAfterAndStatusEquals(dbReservationDto.getRoomNumber(),dbReservationDto.getArrival(),"OPEN");
+        List<DbReservation> activeReservationsInRoom = dbReservationDAO.findAllByRoomNumberAndDepartBeforeAndStatusEquals(dbReservationDto.getRoomNumber(),dbReservationDto.getArrival(),"OPEN");
         if(activeReservationsInRoom.isEmpty()){
             DbReservation dbReservation = DbReservation.builder()
                     .arrival(dbReservationDto.getArrival())
@@ -35,17 +37,18 @@ public class ReservationService implements IReservationService {
     }
 
     @Override
-    public DbReservationDto getReservations(String user) {
-        return null;
+    public List<DbReservation> getReservations(String user) {
+        List<DbReservation> activeReservationsInRoom = dbReservationDAO.findAllByBookerId(user);
+        return activeReservationsInRoom;
+
     }
 
-    @Override
-    public DbReservationDto checkReservation(DbReservationDto dbReservationDto) {
-        return null;
-    }
 
-    @Override
-    public DbReservationDto getAllReservation(DbReservationDto dbReservationDto) {
-        return null;
+
+@Override
+    public List<DbReservation> getAllReservation(int page) {
+        Pageable pageRequest =  PageRequest.of(page, 20);
+        List<DbReservation> activeReservationsInRoom = dbReservationDAO.findAll(pageRequest).toList();
+        return activeReservationsInRoom;
     }
 }

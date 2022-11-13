@@ -14,5 +14,6 @@ public interface DbReservationRepo extends PagingAndSortingRepository<DbReservat
 
     List<DbReservation> findAllByBookerIdAndStatusEquals(String name, String open);
 
-    List<DbReservation> findAllByRoomNumberAndDepartAfterAndStatusEquals(String number, Timestamp freeBefore, String open);
+    @Query("select d from DbReservation d where d.roomNumber = ?1 and d.depart < ?2 and d.status = ?3")
+    List<DbReservation> findAllByRoomNumberAndDepartBeforeAndStatusEquals(String number, Timestamp freeBefore, String open);
 }

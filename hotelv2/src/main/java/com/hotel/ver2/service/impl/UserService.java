@@ -2,6 +2,7 @@ package com.hotel.ver2.service.impl;
 
 import com.hotel.ver2.dto.DbUserDto;
 import com.hotel.ver2.entity.DbUser;
+import com.hotel.ver2.entity.DbUserRoles;
 import com.hotel.ver2.repo.DbRoleRepo;
 import com.hotel.ver2.repo.DbUserRepo;
 import com.hotel.ver2.repo.DbUserRolesRepo;
@@ -13,7 +14,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.security.Principal;
+import java.math.BigDecimal;
 import java.util.List;
 
 @Service
@@ -47,32 +48,54 @@ public class UserService implements IUserService {
 
     @Override
     public DbUser register(DbUserDto userData) {
-        return null;
+        DbUser newUser = DbUser.builder()
+                .addr(userData.getAddr())
+                .bill(BigDecimal.ZERO)
+                .firstname(userData.getFirstname())
+                .lastname(userData.getLastname())
+                .password(passwordEncoder.encode(userData.getPassword()))
+                .status("OPEN")
+                .build();
+        userDAO.save(newUser);
+        DbUserRoles userRoles= new DbUserRoles();
+        userRoles.setUsername(userData.getUsername());
+        userRoles.setRolename("ROLE_USER");
+        userRoleDAO.save(userRoles);
+        return newUser;
     }
 
-    @Override
+    /*@Override
     public DbUserDto updateProfile(Integer id, DbUserDto userProfileDto, DbUser user) {
         return null;
+    }*/
+
+    @Override
+    public List<DbUserRoles> getAdmins() {
+        return userRoleDAO.findAllByRolename("ROLE_ADMIN");
     }
 
     @Override
-    public List<DbUserDto> getAdmins() {
-        return null;
+    public List<DbUser> getBills() {
+        List<DbUser> dbUsers =userDAO.findAll();
+        return dbUsers;
     }
 
-    @Override
-    public List<DbUserDto> getBills() {
-        return null;
-    }
-
-    @Override
+  /*  @Override
     public DbUserDto deactivateUser(int id, Principal principal) {
         return null;
-    }
+    }*/
 
     @Override
-    public DbUserDto promoteUser(DbUser user) {
-        return null;
+    public String promoteUser(String ID) {
+        DbUserRoles userRoles= new DbUserRoles();
+        userRoles.setUsername(ID);
+        userRoles.setRolename("ROLE_ADMIN");
+        try {
+            userRoleDAO.save(userRoles);
+        }catch (Exception e){
+            return "error";
+        }
+        return "promoted";
     }
 
 

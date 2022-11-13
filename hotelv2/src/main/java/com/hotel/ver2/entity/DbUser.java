@@ -1,22 +1,24 @@
 package com.hotel.ver2.entity;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.List;
 import java.util.Objects;
 
 
-@NoArgsConstructor
+@Builder
 @Getter
 @Setter
 @Entity
 @Table(name = "users", schema = "dbdev")
-public class DbUser {
+public class DbUser implements Serializable {
     @Basic
     @Column(name = "password")
     private String password;
@@ -36,6 +38,10 @@ public class DbUser {
     @Basic
     @Column(name = "created")
     private Timestamp created;
+
+    public DbUser() {
+    }
+
     @Basic
     @Column(name = "updated")
     private Timestamp updated;
