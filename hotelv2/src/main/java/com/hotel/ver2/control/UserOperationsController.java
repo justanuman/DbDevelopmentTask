@@ -103,9 +103,13 @@ public class UserOperationsController {
 
     //@PreAuthorize("hasRole(ROLE_USER) and #id == authentication.principal.id")
     // DbUserDto updateProfile(Integer id, DbUserDto userProfileDto, DbUser user);
+    @GetMapping
+    @ResponseBody
     public List<DbUserRoles> getAdmins(){
         return null;
     }
+    @GetMapping
+    @ResponseBody
     public List<DbUser> getBills(){
         return null;
     }
@@ -114,6 +118,8 @@ public class UserOperationsController {
     // @PreAuthorize("hasRole(ROLE_ADMIN) or hasRole(ROLE_MODERATOR)")
     // DbUserDto deactivateUser(int id,  Principal principal);
     //  @PreAuthorize("hasRole(ROLE_ADMIN) or hasRole(ROLE_MODERATOR)")
+    @PutMapping
+    @ResponseBody
     public String promoteUser(String ID){
         return ID;
     }
