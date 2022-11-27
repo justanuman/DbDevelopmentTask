@@ -1,7 +1,9 @@
 package com.hotel.ver2.control;
 
 import com.hotel.ver2.config.security.JWT.JwtTokenProvider;
+import com.hotel.ver2.dto.DbUserDto;
 import com.hotel.ver2.entity.DbUser;
+import com.hotel.ver2.entity.DbUserRoles;
 import com.hotel.ver2.service.interfaces.IUserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,6 +17,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -93,5 +96,25 @@ public class UserOperationsController {
        /* } catch (AuthenticationException e) {
             throw new BadCredentialsException("Invalid username or password");
         }*/
+    }
+
+
+
+
+    //@PreAuthorize("hasRole(ROLE_USER) and #id == authentication.principal.id")
+    // DbUserDto updateProfile(Integer id, DbUserDto userProfileDto, DbUser user);
+    public List<DbUserRoles> getAdmins(){
+        return null;
+    }
+    public List<DbUser> getBills(){
+        return null;
+    }
+
+
+    // @PreAuthorize("hasRole(ROLE_ADMIN) or hasRole(ROLE_MODERATOR)")
+    // DbUserDto deactivateUser(int id,  Principal principal);
+    //  @PreAuthorize("hasRole(ROLE_ADMIN) or hasRole(ROLE_MODERATOR)")
+    public String promoteUser(String ID){
+        return ID;
     }
 }
