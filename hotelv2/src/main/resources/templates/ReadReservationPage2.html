@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<tr
+        th:each="reservDTO, iStat : ${reservDTOs}"
+        th:style="${iStat.odd}? 'font-weight: bold;'"
+        th:alt-title="${iStat.even}? 'even' : 'odd'">
+    <td th:text="${reservDTO.id}">ид</td>
+    <td th:text="${reservDTO.bookerID}">имя </td>
+    <td th:text="${reservDTO.arrival}">когда приедет</td>
+    <td th:text="${reservDTO.depart}">когда уедет</td>
+    <td th:text="${reservDTO.roomNumber}">номер комнаты</td>
+    <td th:text="${reservDTO.numberOfOccupants}">сколько людей с ним</td>
+</tr>
+
+</body>
+</html>

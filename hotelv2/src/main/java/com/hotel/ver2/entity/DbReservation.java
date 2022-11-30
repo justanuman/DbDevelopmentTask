@@ -40,6 +40,21 @@ public class DbReservation implements Serializable {
     @Column(name = "status")
     private String status;
 
+    public DbReservation(Integer id, Timestamp arrival, Timestamp depart, String bookerId, String roomNumber, Timestamp created, Integer numberOfOccupants, String status) {
+        this.id = id;
+        this.arrival = arrival;
+        this.depart = depart;
+        this.bookerId = bookerId;
+        this.roomNumber = roomNumber;
+        this.created = created;
+        this.numberOfOccupants = numberOfOccupants;
+        this.status = status;
+    }
+
+    public DbReservation() {
+        super();
+    }
+
 
     public Integer getId() {
         return id;

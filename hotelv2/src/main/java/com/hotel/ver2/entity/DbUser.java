@@ -39,8 +39,6 @@ public class DbUser implements Serializable {
     @Column(name = "created")
     private Timestamp created;
 
-    public DbUser() {
-    }
 
     @Basic
     @Column(name = "updated")

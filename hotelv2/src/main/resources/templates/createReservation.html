@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>RESERVATION PAIN</title>
+
+
+</head>
+
+<body>
+
+
+<form  th:method="POST" th:action="@{/admin/Reservation/createReservation}" th:object="${createDTO}">
+    <label for="id" >заполнить для обновления</label>
+    <input type="number" id="id" th:field="*{id}">
+
+    <label for="bookerID" >Ввод</label>
+    <input type="text" id="bookerID" th:field="*{bookerID}">
+
+    <label for="arrival" >Ввод</label>
+    <input type="text" id="arrival" th:field="*{arrival}">
+
+    <label for="depart" >Ввод</label>
+    <input type="text" id="depart" th:field="*{arrival}">
+
+    <label for="roomNumber" >Ввод</label>
+    <input type="text" id="roomNumber" th:field="*{roomNumber}" >
+
+    <label for="numberOfOccupants" >numberOfOccupants</label>
+    <input type="number" id="numberOfOccupants" th:field="*{numberOfOccupants}" >
+
+    <input type="submit" value="добавить">
+</form>
+
+</body>
+
+</html>

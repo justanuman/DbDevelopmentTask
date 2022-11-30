@@ -11,7 +11,7 @@ import java.util.List;
 
 @RestController
 public class CommercialOperationsController {
-
+/*
     @ResponseBody
     @PostMapping
     public String reserveAroom(){
@@ -63,5 +63,5 @@ public class CommercialOperationsController {
     @ResponseBody
     public List<DbServicedUser> showAllRenderedServicesTo(String name){
         return null;
-    }
+    }*/
 }

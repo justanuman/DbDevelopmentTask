@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 @Service
@@ -23,16 +24,41 @@ public class ReservationService implements IReservationService {
 
     @Override
     public DbReservation reserveARoom(DbReservationDto dbReservationDto) {
-        List<DbReservation> activeReservationsInRoom = dbReservationDAO.findAllByRoomNumberAndDepartBeforeAndStatusEquals(dbReservationDto.getRoomNumber(),dbReservationDto.getArrival(),"OPEN");
-        if(activeReservationsInRoom.isEmpty()){
-            DbReservation dbReservation = DbReservation.builder()
-                    .arrival(dbReservationDto.getArrival())
-                    .depart(dbReservationDto.getDepart())
+       // List<DbReservation> activeReservationsInRoom = dbReservationDAO.findAllByRoomNumberAndDepartBeforeAndStatusEquals(dbReservationDto.getRoomNumber(),dbReservationDto.getArrival(),"OPEN");
+       // if(activeReservationsInRoom.isEmpty()){
+        DbReservation dbReservation = DbReservation.builder()
+                    //.arrival(Timestamp.valueOf(dbReservationDto.getArrival()))
+                   // .depart(Timestamp.valueOf(dbReservationDto.getDepart()))
                     .numberOfOccupants(dbReservationDto.getNumberOfOccupants())
                     .bookerId(dbReservationDto.getBookerID())
-                    .roomNumber(dbReservationDto.getRoomNumber()).build();
+                    .roomNumber(dbReservationDto.getRoomNumber())
+                .status("OPEN")
+                .build();
+        return dbReservationDAO.save(dbReservation);
+       // }else {  return null;}
+
+    }
+    @Override
+    public void deleteARoom(int id) {
+        // List<DbReservation> activeReservationsInRoom = dbReservationDAO.findAllByRoomNumberAndDepartBeforeAndStatusEquals(dbReservationDto.getRoomNumber(),dbReservationDto.getArrival(),"OPEN");
+        // if(activeReservationsInRoom.isEmpty())
+        dbReservationDAO.delete(dbReservationDAO.findById(id).orElse(null));
+        // }else {  return null;}
+
+    }
+
+    @Override
+    public DbReservation updateAReservation(DbReservationDto dbReservationDto) {
+        //List<DbReservation> activeReservationsInRoom = dbReservationDAO.findAllByRoomNumberAndDepartBeforeAndStatusEquals(dbReservationDto.getRoomNumber(),dbReservationDto.getArrival(),"OPEN");
+       // if(activeReservationsInRoom.isEmpty()){
+            DbReservation dbReservation = DbReservation.builder().id(dbReservationDto.getId())
+                    .arrival(Timestamp.valueOf(dbReservationDto.getArrival()))
+                    .depart(Timestamp.valueOf(dbReservationDto.getDepart()))
+                    .numberOfOccupants(dbReservationDto.getNumberOfOccupants())
+                    .bookerId(dbReservationDto.getBookerID())
+                    .roomNumber(dbReservationDto.getRoomNumber()) .status("OPEN").build();
             return dbReservationDAO.save(dbReservation);
-        }else {  return null;}
+        //}else {  return null;}
 
     }
 

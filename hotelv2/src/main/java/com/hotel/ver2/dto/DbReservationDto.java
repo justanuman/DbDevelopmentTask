@@ -4,15 +4,20 @@ import lombok.Data;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 @Data
 public class DbReservationDto implements Serializable {
-    private final Integer id;
-    private final String bookerID;
-    private final Timestamp arrival;
-    private final Timestamp depart;
-    private final String roomNumber;
-    private final Integer numberOfOccupants;
+    private  Integer id;
+    private  String bookerID;
+    private  String arrival;
+    private  String depart;
+    private  String roomNumber;
+    private  Integer numberOfOccupants;
 
 
+    public DbReservationDto() {
+
+    }
 }

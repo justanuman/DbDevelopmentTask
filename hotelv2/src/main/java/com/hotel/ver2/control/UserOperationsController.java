@@ -76,9 +76,8 @@ public class UserOperationsController {
             produces = "application/json")
     @ResponseBody
     public ResponseEntity register(@RequestParam String username, @RequestParam String password, @RequestParam String email) {
-        DbUser newUser = new DbUser();
-        newUser.setUsername(username);
-        newUser.setPassword(password);
+        DbUser newUser = DbUser.builder().username(username).password(password).build();
+
 
         //todo input check
        // userService.register(newUser);
@@ -100,7 +99,7 @@ public class UserOperationsController {
 
 
 
-
+/*
     //@PreAuthorize("hasRole(ROLE_USER) and #id == authentication.principal.id")
     // DbUserDto updateProfile(Integer id, DbUserDto userProfileDto, DbUser user);
     @GetMapping
@@ -122,5 +121,5 @@ public class UserOperationsController {
     @ResponseBody
     public String promoteUser(String ID){
         return ID;
-    }
+    }*/
 }

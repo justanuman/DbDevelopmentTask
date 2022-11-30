@@ -44,12 +44,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-                .antMatchers("/login").permitAll()
-                .antMatchers("/register").permitAll()
-                .antMatchers("/greetings-with-response-body").permitAll()
-                .antMatchers(" /admin/**").hasRole("ADMIN")
-                //.antMatchers("/").permitAll()
-                .anyRequest().authenticated()
+                //.antMatchers("/login").permitAll()
+                //.antMatchers("/register").permitAll()
+               // .antMatchers("/greetings-with-response-body").permitAll()
+               // .antMatchers(" /admin/**").hasRole("ADMIN")
+                .antMatchers("/").permitAll()
+                //.anyRequest().authenticated()
                 .and().addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);
         //.apply(new JwtConfigurer(jwtTokenProvider));.antMatchers(" /admin/**").hasRole("ADMIN")
     }
