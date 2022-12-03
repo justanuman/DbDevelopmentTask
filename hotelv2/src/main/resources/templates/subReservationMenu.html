@@ -1,0 +1,36 @@
+
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>RESERVATION PAIN</title>
+
+
+</head>
+
+<body>
+
+<nav th:fragment="navbar" class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <a class="navbar-brand" th:href="@{/admin/Reservation}">Подменю управления бронью(резервациями)</a>
+        </div>
+        <ul class="nav navbar-nav">
+            <li><a class="nav-link" th:href="@{/admin/Reservation/cr}">создать новую резервацию</a></li>
+
+            <li><a class="nav-link" th:href="@{/admin/Reservation/upd}">обновить</a></li>
+
+            <li><a class="nav-link" th:href="@{/admin/Reservation/del}">удаление</a></li>
+
+            <li><a class="nav-link" th:href="@{/admin/Reservation/findAllByRoomNumberAndDepart}">поиск по дате отъезда и номеру комнаты</a></li>
+
+            <li><a class="nav-link" th:href="@{/admin/Reservation/findAllByBookerIdAndStatusEquals}">поиск по человеку</a></li>
+
+        </ul>
+    </div>
+</nav>
+
+</body>
+
+</html>

@@ -1,6 +1,8 @@
 package com.hotel.ver2.entity;
 
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -14,9 +16,11 @@ public class DbRole {
     @Column(name = "rolename")
     private String rolename;
     @Basic
+    @CreatedDate
     @Column(name = "created")
     private Timestamp created;
     @Basic
+    @LastModifiedDate
     @Column(name = "updated")
     private Timestamp updated;
     @Basic

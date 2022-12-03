@@ -5,14 +5,14 @@
              version="3.0">
   <persistence-unit name="default">
 
-    <class>com.hotel.entity.DbReservation</class>
-    <class>com.hotel.entity.DbRole</class>
-    <class>com.hotel.entity.DbRoom</class>
-    <class>com.hotel.entity.DbServicedUser</class>
-    <class>com.hotel.entity.DbServiceList</class>
-    <class>com.hotel.entity.DbStatusTable</class>
-    <class>com.hotel.entity.DbUser</class>
-    <class>com.hotel.entity.DbUserRoles</class>
+    <class>com.hotel.ver2.entity.DbRoom</class>
+    <class>com.hotel.ver2.entity.DbRole</class>
+    <class>com.hotel.ver2.entity.DbReservation</class>
+    <class>com.hotel.ver2.entity.DbServicedUser</class>
+    <class>com.hotel.ver2.entity.DbStatusTable</class>
+    <class>com.hotel.ver2.entity.DbUser</class>
+    <class>com.hotel.ver2.entity.DbUserRoles</class>
+    <class>com.hotel.ver2.entity.DbServiceList</class>
     <properties>
       <property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/dbdev"/>
       <property name="hibernate.connection.driver_class" value="com.mysql.cj.jdbc.Driver"/>

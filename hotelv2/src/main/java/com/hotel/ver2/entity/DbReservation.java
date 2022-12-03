@@ -3,6 +3,7 @@ package com.hotel.ver2.entity;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -10,8 +11,8 @@ import java.sql.Timestamp;
 import java.util.Objects;
 
 @Builder
-@Data
 @Entity
+
 @Table(name = "reservation", schema = "dbdev")
 public class DbReservation implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,6 +32,7 @@ public class DbReservation implements Serializable {
     @Column(name = "roomNumber")
     private String roomNumber;
     @Basic
+    @CreatedDate
     @Column(name = "created")
     private Timestamp created;
     @Basic

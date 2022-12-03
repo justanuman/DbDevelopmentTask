@@ -9,29 +9,32 @@
 
 <body>
 
-
-<form  th:method="POST" th:action="@{/admin/Reservation/createReservation}" th:object="${createDTO}">
-    <label for="id" >заполнить для обновления</label>
-    <input type="number" id="id" th:field="*{id}">
-
-    <label for="bookerID" >Ввод</label>
+<nav th:fragment="navbar" class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <a class="navbar-brand" th:href="@{/admin/Reservation}">Подменю управления бронью(резервациями)</a>
+        </div>
+    </div>
+</nav>
+<form   id = "createF" th:method="POST" th:action="@{/admin/Reservation/cr}" th:object="${createDTO}">
+    <h2> ВВОД НОВОЙ БРОНИ</h2>
+    <label for="bookerID" >Ввод bookerID </label>
     <input type="text" id="bookerID" th:field="*{bookerID}">
 
-    <label for="arrival" >Ввод</label>
+    <label for="arrival" >Ввод arrival (отключено для тестов)</label>
     <input type="text" id="arrival" th:field="*{arrival}">
 
-    <label for="depart" >Ввод</label>
-    <input type="text" id="depart" th:field="*{arrival}">
+    <label for="depart" >Ввод depart (отключено для тестов) </label>
+    <input type="text" id="depart" th:field="*{depart}">
 
-    <label for="roomNumber" >Ввод</label>
+    <label for="roomNumber" >Ввод roomNumber</label>
     <input type="text" id="roomNumber" th:field="*{roomNumber}" >
 
-    <label for="numberOfOccupants" >numberOfOccupants</label>
+    <label for="numberOfOccupants" > Ввод numberOfOccupants</label>
     <input type="number" id="numberOfOccupants" th:field="*{numberOfOccupants}" >
 
-    <input type="submit" value="добавить">
+    <input type="submit"  form="createF" value="добавить">
 </form>
-
 </body>
 
 </html>

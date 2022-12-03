@@ -37,7 +37,7 @@ public class SpringPersistenceConfig {
         ds.setMaxTotal(10);*/
         DataSourceBuilder ds = DataSourceBuilder.create();
         ds.driverClassName("com.mysql.cj.jdbc.Driver");
-        ds.url("jdbc:mysql://localhost:3306/dbdev");
+        ds.url("jdbc:mysql://localhost:3306/dbdev?autoReconnect=true");
         ds.username("root");
         ds.password("root");
         return ds.build();

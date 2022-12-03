@@ -4,6 +4,7 @@ import com.hotel.ver2.dto.DbReservationDto;
 import com.hotel.ver2.entity.DbReservation;
 import com.hotel.ver2.repo.DbReservationRepo;
 import com.hotel.ver2.service.interfaces.IReservationService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -15,6 +16,7 @@ import java.util.List;
 
 @Service
 @Transactional
+@Slf4j
 public class ReservationService implements IReservationService {
     final DbReservationRepo dbReservationDAO;
 @Autowired
@@ -48,16 +50,18 @@ public class ReservationService implements IReservationService {
     }
 
     @Override
-    public DbReservation updateAReservation(DbReservationDto dbReservationDto) {
+    public DbReservation updateAReservation(DbReservationDto dbReservationDto,DbReservation dbReservation) {
+        log.info("!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+
         //List<DbReservation> activeReservationsInRoom = dbReservationDAO.findAllByRoomNumberAndDepartBeforeAndStatusEquals(dbReservationDto.getRoomNumber(),dbReservationDto.getArrival(),"OPEN");
        // if(activeReservationsInRoom.isEmpty()){
-            DbReservation dbReservation = DbReservation.builder().id(dbReservationDto.getId())
-                    .arrival(Timestamp.valueOf(dbReservationDto.getArrival()))
-                    .depart(Timestamp.valueOf(dbReservationDto.getDepart()))
-                    .numberOfOccupants(dbReservationDto.getNumberOfOccupants())
-                    .bookerId(dbReservationDto.getBookerID())
-                    .roomNumber(dbReservationDto.getRoomNumber()) .status("OPEN").build();
-            return dbReservationDAO.save(dbReservation);
+        log.info(dbReservation.getBookerId());
+       // dbReservation.setBookerId("3");
+        if(Timestamp.valueOf(dbReservationDto.getArrival())!=null){dbReservation.setArrival(Timestamp.valueOf(dbReservationDto.getArrival()));}
+        if(Timestamp.valueOf(dbReservationDto.getDepart())!=null){dbReservation.setDepart(Timestamp.valueOf(dbReservationDto.getDepart()));}
+        if(dbReservationDto.getNumberOfOccupants()!=null){dbReservation.setNumberOfOccupants(dbReservationDto.getNumberOfOccupants());}
+        dbReservationDAO.save(dbReservation);
+        return  dbReservation;
         //}else {  return null;}
 
     }
@@ -69,7 +73,11 @@ public class ReservationService implements IReservationService {
 
     }
 
+    @Override
+    public DbReservation findReservation(int id) {
+        return dbReservationDAO.findById(id).orElse(null);
 
+    }
 
 @Override
     public List<DbReservation> getAllReservation(int page) {

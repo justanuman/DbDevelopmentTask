@@ -13,7 +13,7 @@ import java.util.Objects;
 @Entity
 @Table(name = "rooms", schema = "dbdev", catalog = "")
 public class DbRoom {
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+   // @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "ID")
     private String id;

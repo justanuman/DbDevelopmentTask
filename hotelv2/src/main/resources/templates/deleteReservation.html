@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>RESERVATION PAIN</title>
+
+
+</head>
+
+<body>
+
+<nav th:fragment="navbar" class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <a class="navbar-brand" th:href="@{/admin/Reservation}">Подменю управления бронью(резервациями)</a>
+        </div>
+    </div>
+</nav>
+<form   id = "delF" th:action="@{/admin/Reservation/del}" th:object="${id}" th:method="delete">
+    <h2> ВВОД ОЙДИ для удаления</h2>
+    <label for="id" >Ввод ID </label>
+    <input type="text" id="id" th:field="*{id}">
+    <input type="submit"  form="delF" value="удалить">
+</form>
+<h2> общий список броней</h2>
+<table  border="1" >
+    <tr>
+        <th>ид</th>
+        <th>имя</th>
+        <th>когда приедет</th>
+        <th>когда уедет</th>
+        <th>номер комнаты</th>
+        <th>сколько людей с ним</th>
+    </tr>
+    <tr
+            th:each="reservDTO, iStat : ${reservDTOs}"
+            th:style="${iStat.odd}? 'font-weight: bold;'"
+            th:alt-title="${iStat.even}? 'even' : 'odd'">
+        <td th:text="${reservDTO.id}">ид</td>
+        <td th:text="${reservDTO.bookerId}">имя </td>
+        <td th:text="${reservDTO.arrival}">когда приедет</td>
+        <td th:text="${reservDTO.depart}">когда уедет</td>
+        <td th:text="${reservDTO.roomNumber}">номер комнаты</td>
+        <td th:text="${reservDTO.numberOfOccupants}">сколько людей</td>
+    </tr>
+</table>
+</body>
+
+</html>

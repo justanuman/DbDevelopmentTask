@@ -1,15 +1,19 @@
 package com.hotel.ver2.control;
 
-import com.hotel.ver2.dto.DbReservationDto;
+import com.hotel.ver2.dto.*;
 import com.hotel.ver2.entity.DbReservation;
+import com.hotel.ver2.entity.DbRoom;
 import com.hotel.ver2.repo.DbReservationRepo;
+import com.hotel.ver2.repo.DbRoomRepo;
 import com.hotel.ver2.service.impl.ReservationService;
+import com.hotel.ver2.service.impl.RoomsService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -21,6 +25,11 @@ public class AdminOperationsController {
 @Autowired
 DbReservationRepo reservationRepo;
 
+
+    @Autowired
+    RoomsService roomsService;
+    @Autowired
+    DbRoomRepo dbRoomRepo;
     //doing it in 1 class bc no time
     //also I am not really interested in doing it because I will show this only 1 time in my life
     //if you are reading this and are not me, I am wrong, but Hello anyway
@@ -55,102 +64,169 @@ DbReservationRepo reservationRepo;
           //  produces = "application/json"
   //  )
    // @ResponseBody
-    @GetMapping("/admin/Reservation/createReservation/new")
+    @GetMapping("/admin/Reservation/cr")
     public String newReserv(Model model) {
         model.addAttribute("createDTO" ,new DbReservationDto() );
         return "createReservation";
     }
-  @PostMapping("/admin/Reservation/createReservation")
+
+    @GetMapping("/admin/Reservation")
+    public String reservMenuForm(Model model) {
+       // model.addAttribute("createDTO" ,new DbReservationDto() );
+        return "subReservationMenu";
+    }
+
+  @PostMapping("/admin/Reservation/cr")
     public String createReservation(@ModelAttribute("createDTO") DbReservationDto dbReservationDto) {
         DbReservation dbReservation = reservationService.reserveARoom(dbReservationDto);
         log.info("INTO POST");
-        return "success";
+        return "subReservationMenu";
     }
 
-   /* @PutMapping(
-            value = "/admin/Reservation/UPDATE",
+
+  @GetMapping("/admin/Reservation/upd")
+    public String updateReservForm(Model model) {
+        model.addAttribute("updateDTO" ,new DbReservationDto());
+        return "UpdateReservation";
+    }
+    //почему то он упорно не хочет видеть put реквесты
+    @PostMapping("/admin/Reservation/upd")
+    public String updateReservation(@ModelAttribute("updateDTO") DbReservationDto dbReservationDto) {
+        log.info("INTO updateReservation");
+        DbReservation dbReservation = reservationService.findReservation(dbReservationDto.getId());
+        DbReservation dbReservation2 = reservationService.updateAReservation(dbReservationDto, dbReservation);
+        return "subReservationMenu";
+    }
+
+
+    @GetMapping(
+            value = "/admin/Reservation/del",
             produces = "application/json"
     )
-    @ResponseBody
-    public String updateReservation(@ModelAttribute("dbReservationDto") DbReservationDto dbReservationDto) {
-        DbReservation dbReservation = reservationService.updateAReservation(dbReservationDto);
-
-        return "subReserv";
-    }*/
-
-    @DeleteMapping(
-            value = "/admin/Reservation/DELETE",
+    public String deleteReservationForm(Model model) {
+        model.addAttribute("id",new IDdto());
+        return "deleteReservation";
+    }
+//либо тмин чудит либо я не знаю что
+    //мне будет очень интересно узнать почему он не может воспринимать что то кроме гет и пост но это потом сейчас мне важно показать что
+    //что то работают для человека которому не интересно
+    @PostMapping(
+            value = "/admin/Reservation/del",
             produces = "application/json"
     )
-    @ResponseBody
-    public String deleteReservation(@RequestParam int id) {
-        reservationService.deleteARoom(id);
-        return "{\"test\": \"Hello using @ResponseBody\"}";
+    public String deleteReservation(@ModelAttribute("id") IDdto id) {
+        reservationService.deleteARoom(id.getId());
+        return "subReservationMenu";
     }
 
     @GetMapping(
             value = "/admin/Reservation/findAllByRoomNumberAndDepart",
             produces = "application/json"
     )
-    public String findAllByRoomNumberAndDepartBeforeAndStatusEquals(@RequestParam String roomNum, @RequestParam Timestamp depart,@RequestParam String status ) {
-        List<DbReservation> list= reservationRepo.findAllByRoomNumberAndDepartBeforeAndStatusEquals(roomNum,depart,status);
-        return "ReadReservationPage1";
+    public String findAllByRoomNumberAndDepartBeforeAndStatusEqualsForm(Model model) {
+        model.addAttribute("reqData", new RoomNumAndDepartDTO());
+        //List<DbReservation> list= reservationRepo.findAllByRoomNumberAndDepartBeforeAndStatusEquals(dto.getRoomNum(), Timestamp.valueOf(dto.getDepart()),dto.getStatus());
+
+        return "readReservationPage1";
     }
+
+    @GetMapping(
+            value = "/admin/Reservation/findAllByRoomNumberAndDepart/table",
+            produces = "application/json"
+    )
+    public String findAllByRoomNumberAndDepartBeforeAndStatusEquals(@ModelAttribute("reqData")RoomNumAndDepartDTO dto, Model model) {
+        List<DbReservation> list= reservationRepo.findAllByRoomNumberAndDepartBeforeAndStatusEquals(dto.getRoomNum(), Timestamp.valueOf(dto.getDepart()),dto.getStatus());
+        model.addAttribute("reservDTOs", list);
+        return "readReservationTable1";
+    }
+
 
     @GetMapping(
             value = "/admin/Reservation/findAllByBookerIdAndStatusEquals",
             produces = "application/json"
     )
-    @ResponseBody
-    public String findAllByBookerIdAndStatusEquals(@RequestParam String name, @RequestParam String stat,Model model) {
 
-        List<DbReservation> list= reservationRepo.findAllByBookerIdAndStatusEquals(name,stat);
+    public String findAllByBookerIdAndStatusEquals(Model model) {
+        model.addAttribute("reqData2", new NameStatDto());
+        return "ReadReservationPage2";
+    }
+    @GetMapping(
+            value = "/admin/Reservation/findAllByBookerIdAndStatusEquals/table",
+            produces = "application/json"
+    )
+
+    public String findAllByBookerIdAndStatusEquals(@ModelAttribute("reqData2")NameStatDto dto, Model model) {
+        List<DbReservation> list= reservationRepo.findAllByBookerIdAndStatusEquals(dto.getName(),dto.getStat());
         model.addAttribute("reservDTOs", list);
-        return "ReadReservationPage1";
+        return "readReservationTable1";
     }
 
+    //String roomNum, @RequestParam Timestamp depart,@RequestParam String status
+
+/*    @GetMapping(
+            value = "/admin/Reservation/findAllByRoomNumberAndDepart",
+            produces = "application/json"
+    )
+    public String findAllByRoomNumberAndDepartBeforeAndStatusEquals(@RequestParam String roomNum, @RequestParam Timestamp depart,@RequestParam String status ) {
+        List<DbReservation> list= reservationRepo.findAllByRoomNumberAndDepartBeforeAndStatusEquals(roomNum,depart,status);
+        return "ReadReservationPage1";
+    }*/
 
     @GetMapping(
-            value = "/admin/Reservation/findll",
+            value = "/admin/Reservation/findAll",
             produces = "application/json"
     )
 
     public String findAll(Model model) {
-
         Iterable<DbReservation> list= reservationRepo.findAll();
         model.addAttribute("reservDTOs", list);
-        return "ReadReservationPage1";
+        return "readReservationTable1";
     }
 
-    @GetMapping(
-            value = "/admin/Reservation/findAllByRoomNumberAndStatusEquals",
-            produces = "application/json"
-    )
-    @ResponseBody
-    public String findAllByRoomNumberAndStatusEquals() {
-        return "{\"test\": \"Hello using @ResponseBody\"}";
-    }
+
+
+
+
+
+
+
+
+
+
+
 
     /////////////
     ////////////ROOM
     ///////////
+
     @GetMapping(
             value = "/admin/Room",
             produces = "application/json"
     )
-    @ResponseBody
-    public String roomSubMenu() {
-        return "{\"test\": \"Hello using @ResponseBody\"}";
+    public String roomSubMenu(Model model) {
+     //   model.addAttribute("roomDto", new RoomDto());
+        return "rooms/roomSubMenu";
     }
-
-
-    @PostMapping(
-            value = "/admin/Room/CREATE",
+    @GetMapping(
+            value = "/admin/Room/cr",
             produces = "application/json"
     )
-    @ResponseBody
-    public String createRoom() {
-        return "{\"test\": \"Hello using @ResponseBody\"}";
+    public String createRoomForm(Model model) {
+        model.addAttribute("roomDto", new RoomDto());
+        return "rooms/createRoom";
+    }
+    @PostMapping(
+            value = "/admin/Room/cr",
+            produces = "application/json"
+    )
+    public String createRoom(@ModelAttribute("roomDto")RoomDto roomDto) {
+        DbRoom dbRoom = new DbRoom();
+        dbRoom.setId(roomDto.getId());
+        dbRoom.setInfo(roomDto.getInfo());
+        dbRoom.setRate(BigDecimal.valueOf(Double.valueOf(roomDto.getRate())));
+        dbRoom.setSize(roomDto.getSize());
+        dbRoomRepo.save(dbRoom);
+        return "rooms/createRoom";
     }
 
     @PutMapping(

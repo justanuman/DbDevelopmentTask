@@ -3,6 +3,9 @@ package com.hotel.ver2.entity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -27,9 +30,11 @@ public class DbServicedUser {
     @Column(name = "status")
     private String status;
     @Basic
+    @CreatedDate
     @Column(name = "created")
     private Timestamp created;
     @Basic
+    @LastModifiedDate
     @Column(name = "updated")
     private Timestamp updated;
 

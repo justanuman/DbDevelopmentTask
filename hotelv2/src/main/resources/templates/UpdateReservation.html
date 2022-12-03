@@ -1,0 +1,40 @@
+
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>RESERVATION PAIN</title>
+
+
+</head>
+
+<body>
+<nav th:fragment="navbar" class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <a class="navbar-brand" th:href="@{/admin/Reservation}">Подменю управления бронью(резервациями)</a>
+        </div>
+    </div>
+</nav>
+<form  id="updateF" th:method="put" th:action="@{/admin/Reservation/upd}" th:object="${updateDTO}">
+    <h2> ОБНОВЛЕНИЕ БРОНИ</h2>
+    <label for="putId" >заполнить для обновления</label>
+    <input type="number" id="putId" th:field="*{id}">
+
+    <label for="putArrival" >Ввод arrival (отключено для тестов)</label>
+    <input type="text" id="putArrival" th:field="*{arrival}">
+
+    <label for="putDepart" >Ввод depart </label>
+    <input type="text" id="putDepart" th:field="*{depart}">
+
+    <label for="putNumberOfOccupants" > Ввод numberOfOccupants</label>
+    <input type="number" id="putNumberOfOccupants" th:field="*{numberOfOccupants}" >
+
+    <input type="submit" form="updateF" value="обновить">
+</form>
+
+
+</body>
+
+</html>

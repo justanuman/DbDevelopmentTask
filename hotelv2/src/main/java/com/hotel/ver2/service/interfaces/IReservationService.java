@@ -12,9 +12,13 @@ public interface IReservationService {
 
     void deleteARoom(int id);
 
-    DbReservation updateAReservation(DbReservationDto dbReservationDto);
+
+
+    DbReservation updateAReservation(DbReservationDto dbReservationDto, DbReservation dbReservation);
 
     List<DbReservation> getReservations(String user);
+
+    DbReservation findReservation(int id);
 
     List<DbReservation> getAllReservation(int page);
 }
