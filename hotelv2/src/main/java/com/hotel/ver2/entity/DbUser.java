@@ -24,7 +24,7 @@ public class DbUser implements Serializable {
     @Basic
     @Column(name = "password")
     private String password;
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     @Id
     @Column(name = "username")
     private String username;
@@ -55,11 +55,28 @@ public class DbUser implements Serializable {
     private BigDecimal bill;
 
 
+    public DbUser(String password, String username, String firstname, String lastname, String addr, Timestamp created, Timestamp updated, String status, BigDecimal bill, List<DbRole> roles) {
+        this.password = password;
+        this.username = username;
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.addr = addr;
+        this.created = created;
+        this.updated = updated;
+        this.status = status;
+        this.bill = bill;
+        this.roles = roles;
+    }
+
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_roles",
             joinColumns = {@JoinColumn(name = "username", referencedColumnName = "username")},
             inverseJoinColumns = {@JoinColumn(name = "rolename", referencedColumnName = "rolename")})
     private List<DbRole> roles;
+
+    public DbUser() {
+        super();
+    }
 
     public List<DbRole> getRoles() {
         return roles;

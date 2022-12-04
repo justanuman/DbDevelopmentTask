@@ -1,22 +1,21 @@
 package com.hotel.ver2.control;
 
 import com.hotel.ver2.dto.*;
-import com.hotel.ver2.entity.DbReservation;
-import com.hotel.ver2.entity.DbRoom;
-import com.hotel.ver2.entity.DbServiceList;
-import com.hotel.ver2.entity.DbServicedUser;
-import com.hotel.ver2.repo.DbReservationRepo;
-import com.hotel.ver2.repo.DbRoomRepo;
-import com.hotel.ver2.repo.DbServiceListRepo;
-import com.hotel.ver2.repo.DbServicedUserRepo;
+import com.hotel.ver2.entity.*;
+import com.hotel.ver2.repo.*;
 import com.hotel.ver2.service.impl.ReservationService;
 import com.hotel.ver2.service.impl.RoomsService;
 import com.hotel.ver2.service.impl.ServicesService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.WebRequest;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
@@ -425,14 +424,47 @@ DbReservationRepo reservationRepo;
         return "index";
     }
 
-    @GetMapping (value = "/admin/register")
-    public String registerForm(Model model) {
-        model.addAttribute("UserDto", new UserDTO());
-        return "servicedUsers/deleteServicedUsers";
+    @GetMapping("/admin/registration")
+    public String showRegistrationForm(WebRequest request, Model model) {
+        UserDTO userDto = new UserDTO();
+        model.addAttribute("user", userDto);
+        return "register";
     }
-    @PostMapping (value = "/admin/register")
-    public String register(@ModelAttribute("UserDto") UserDTO dto) {
-        return "index";
+@Autowired
+    BCryptPasswordEncoder passwordEncoder;
+
+    @Autowired
+    DbUserRepo dbUserRepo;
+
+    @PostMapping("/admin/registration")
+    public String showRegistration(@ModelAttribute("user") UserDTO dto) {
+        UserDTO userDto = new UserDTO();
+        DbUser dbUser = DbUser.builder()
+                .password(passwordEncoder.encode(dto.getPassword()))
+                .username(dto.getUsername())
+                .firstname(dto.getFirstName())
+                .lastname(dto.getLastname())
+                .addr(dto.getAddr())
+                .build();
+        dbUserRepo.save(dbUser);
+        log.info("1111111111111111 saved");
+        return "redirect:/admin";
     }
 
+
+    @GetMapping("/admin/login")
+    public String showLoginForm(WebRequest request, Model model) {
+        UserDTO userDto = new UserDTO();
+        model.addAttribute("user", userDto);
+        return "login";
+    }
+
+/*@Autowired
+AuthenticationManagerBuilder authentication;
+    @PostMapping("/admin/login")
+    public String showLogin(@ModelAttribute("user") UserDTO dto) {
+
+        return "redirect:/admin";
+    }
+*/
 }

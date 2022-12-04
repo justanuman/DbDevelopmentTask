@@ -41,7 +41,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 @Autowired
     PasswordEncoder passwordEncoder;
 
-    @Bean
+   @Bean
     @Override
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
@@ -59,7 +59,23 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         //JwtTokenFilter jwtTokenFilter = new JwtTokenFilter(jwtTokenProvider);
         //httpSecurity.addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);
 
-        http.authorizeRequests().antMatchers("/").permitAll().and().formLogin().loginPage("/login");
+        //http.authorizeRequests().antMatchers("/").permitAll().and().formLogin().loginPage("/login");
+        http.httpBasic().disable()
+                .csrf().disable()
+              //  .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+               // .and()
+                .authorizeRequests()
+                //.antMatchers("/login").permitAll()
+                //.antMatchers("/register").permitAll()
+                // .antMatchers("/greetings-with-response-body").permitAll()
+                // .antMatchers(" /admin/**").hasRole("ADMIN")
+                .antMatchers("/admin/login").permitAll()
+                .antMatchers("/admin/registration").permitAll()
+                .anyRequest().authenticated()
+                //.antMatchers("/").authenticated()
+                .and().formLogin()
+                .loginPage("/admin/login").failureUrl("/login?error=true")
+                .defaultSuccessUrl("/admin");
 
 
 
@@ -82,11 +98,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 //.anyRequest().authenticated()
                // .and().addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);
         //.apply(new JwtConfigurer(jwtTokenProvider));.antMatchers(" /admin/**").hasRole("ADMIN")*/
-    }
-     PersistentTokenRepository persistentTokenRepository(){
-        JdbcTokenRepositoryImpl tokenRepositoryImpl = new JdbcTokenRepositoryImpl();
-        tokenRepositoryImpl.setDataSource(dataSource);
-        return tokenRepositoryImpl;
     }
 
 }
