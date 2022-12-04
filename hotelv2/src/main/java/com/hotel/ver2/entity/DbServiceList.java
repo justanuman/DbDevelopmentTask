@@ -13,7 +13,6 @@ import java.util.Objects;
 @Entity
 @Table(name = "servicelist", schema = "dbdev", catalog = "")
 public class DbServiceList {
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "servicename")
     private String servicename;

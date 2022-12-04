@@ -32,22 +32,22 @@ public class RoomsService implements IRoomsService {
         List<DbRoom> out;
         Pageable pageRequest;
          if ( "byRateASC".equals(sortingOption)) {
-            pageRequest = PageRequest.of(page, 20, Sort.by("rate").ascending());
+            pageRequest = PageRequest.of(page, 60, Sort.by("rate").ascending());
             out= roomDAO.findAll(pageRequest).toList();
             return out;
         }
         else if ( "byRateDESC".equals(sortingOption)) {
-            pageRequest = PageRequest.of(page, 20, Sort.by("rate").descending());
+            pageRequest = PageRequest.of(page, 60, Sort.by("rate").descending());
             out= roomDAO.findAll(pageRequest).toList();
             return out;
         }
         else if ( "bySizeDESC".equals(sortingOption)) {
-            pageRequest = PageRequest.of(page, 20, Sort.by("size").descending());
+            pageRequest = PageRequest.of(page, 60, Sort.by("size").descending());
             out= roomDAO.findAll(pageRequest).toList();
             return out;
         }
         else if ( "bySizeASC".equals(sortingOption)) {
-            pageRequest = PageRequest.of(page, 20, Sort.by("size").ascending());
+            pageRequest = PageRequest.of(page, 60, Sort.by("size").ascending());
             out= roomDAO.findAll(pageRequest).toList();
             return out;
         }else  {

@@ -5,6 +5,18 @@
     <title>Title</title>
 </head>
 <body>
-
+<nav th:fragment="navbar" class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <a class="navbar-brand" th:href="@{/admin/Room}">Подменю управления комнатами</a>
+        </div>
+    </div>
+</nav>
+<form   id = "delF" th:action="@{/admin/Room/del}" th:object="${roomId}" th:method="post">
+    <h2> ВВОД ОЙДИ для удаления</h2>
+    <label for="id" >Ввод ID </label>
+    <input type="text" id="id" th:field="*{id}">
+    <input type="submit"  form="delF" value="удалить">
+</form>
 </body>
 </html>

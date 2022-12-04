@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form   id = "createSU" th:method="POST" th:action="@{/admin/ServicedUsers/del}" th:object="${servUdto}">
+    <h2> удаление оказанной услуги</h2>
+
+    <label for="id" >Ввод username</label>
+    <input type="number" id="id" th:field="*{id}">
+
+    <input type="submit"  form="createSU" value="удалить">
+</form>
+</body>
+</html>

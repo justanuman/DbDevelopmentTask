@@ -5,6 +5,19 @@
     <title>Title</title>
 </head>
 <body>
+<nav th:fragment="navbar" class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <a class="navbar-brand" th:href="@{/admin/Services}">Подменю управления услугами</a>
+        </div>
+    </div>
+</nav>
+<form   id = "delS" th:method="POST" th:action="@{/admin/Services/del}" th:object="${servDto}">
+    <h2> удалить услугу</h2>
+    <label for="name" >Ввод username</label>
+    <input type="text" id="name" th:field="*{name}">
 
+    <input type="submit"  form="delS" value="удалить">
+</form>
 </body>
 </html>

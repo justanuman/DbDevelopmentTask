@@ -5,6 +5,31 @@
     <title>Title</title>
 </head>
 <body>
+<nav th:fragment="navbar" class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <a class="navbar-brand" th:href="@{/admin/Room}">Подменю управления комнатами</a>
+        </div>
+    </div>
+</nav>
+<table  border="1" >
+    <tr>
+        <th>номер</th>
+        <th>цена</th>
+        <th>размер</th>
+        <th>информация</th>
 
+    </tr>
+    <tr
+            th:each="roomListDTO, iStat : ${roomListDTOs}"
+            th:style="${iStat.odd}? 'font-weight: bold;'"
+            th:alt-title="${iStat.even}? 'even' : 'odd'">
+        <td th:text="${roomListDTO.id}">ид</td>
+        <td th:text="${roomListDTO.rate}">цена </td>
+        <td th:text="${roomListDTO.size}">когда приедет</td>
+        <td th:text="${roomListDTO.info}">информация</td>
+
+    </tr>
+</table>
 </body>
 </html>

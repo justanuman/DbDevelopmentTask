@@ -5,6 +5,27 @@
     <title>Title</title>
 </head>
 <body>
+<nav th:fragment="navbar" class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <a class="navbar-brand" th:href="@{/admin/Services}">Подменю управления услугами</a>
+        </div>
+    </div>
+</nav>
+<table  border="1" >
+    <tr>
+        <th>услуга</th>
+        <th>цена</th>
 
+    </tr>
+    <tr
+            th:each="servTableDTO, iStat : ${servTableDTOs}"
+            th:style="${iStat.odd}? 'font-weight: bold;'"
+            th:alt-title="${iStat.even}? 'even' : 'odd'">
+        <td th:text="${servTableDTO.servicename}">услуга</td>
+        <td th:text="${servTableDTO.price}">status</td>
+
+    </tr>
+</table>
 </body>
 </html>

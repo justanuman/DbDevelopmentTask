@@ -5,6 +5,13 @@
     <title>Title</title>
 </head>
 <body>
+<nav th:fragment="navbar" class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <a class="navbar-brand" th:href="@{/admin/Room}">Подменю управления комнатами</a>
+        </div>
+    </div>
+</nav>
 <form   id = "createR" th:method="POST" th:action="@{/admin/Room/cr}" th:object="${roomDto}">
     <h2> ВВОД НОВОЙ КОМНАТЫ</h2>
     <label for="ID" >Ввод ID </label>

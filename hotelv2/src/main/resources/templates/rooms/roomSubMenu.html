@@ -5,6 +5,51 @@
     <title>Title</title>
 </head>
 <body>
+<nav th:fragment="navbar" class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <a class="navbar-brand" th:href="@{/admin}">меню</a>
+            <a class="navbar-brand" th:href="@{/admin/Room}">Подменю управления комнатами</a>
+        </div>
+        <ul class="nav navbar-nav">
+            <li><a class="nav-link" th:href="@{/admin/Room/cr}">создать новую комнату</a></li>
 
+            <li><a class="nav-link" th:href="@{/admin/Room/upd}">обновить</a></li>
+
+            <li><a class="nav-link" th:href="@{/admin/Room/del}">удаление</a></li>
+
+            <li><a class="nav-link" th:href="@{/admin/Room/rateASC}">все комнаты сортированные по цене в формате возрастания</a></li>
+            <li><a class="nav-link" th:href="@{/admin/Room/rateDESC}">все комнаты сортированные по цене в формате убывания</a></li>
+
+            <li><a class="nav-link" th:href="@{/admin/Room/sizeASC}">все комнаты сортированные по размеру в формате возрастания</a></li>
+            <li><a class="nav-link" th:href="@{/admin/Room/sizeDESC}">все комнаты сортированные по размеру в формате убывания</a></li>
+
+            <!--
+            <li><a class="nav-link" th:href="@{/admin/Reservation/findAllByRoomNumberAndDepart}">поиск по дате отъезда и номеру комнаты</a></li>
+
+            <li><a class="nav-link" th:href="@{/admin/Reservation/findAllByBookerIdAndStatusEquals}">поиск по человеку</a></li>-->
+
+        </ul>
+    </div>
+</nav>
+<table  border="1" >
+    <tr>
+        <th>номер</th>
+        <th>цена</th>
+        <th>размер</th>
+        <th>информация</th>
+
+    </tr>
+    <tr
+            th:each="roomListDTO, iStat : ${roomListDTOs}"
+            th:style="${iStat.odd}? 'font-weight: bold;'"
+            th:alt-title="${iStat.even}? 'even' : 'odd'">
+        <td th:text="${roomListDTO.id}">ид</td>
+        <td th:text="${roomListDTO.rate}">цена </td>
+        <td th:text="${roomListDTO.size}">когда приедет</td>
+        <td th:text="${roomListDTO.info}">информация</td>
+
+    </tr>
+</table>
 </body>
 </html>

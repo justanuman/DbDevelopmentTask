@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form   id = "findSU" th:method="POST" th:action="@{/admin/ServicedUsers/findU}" th:object="${servUserDto}">
+<h2> поиск оказанной услуги</h2>
+
+<label for="username" >Ввод username</label>
+<input type="text" id="username" th:field="*{username}">
+
+<input type="submit"  form="findSU" value="найти">
+</form>
+</body>
+</html>

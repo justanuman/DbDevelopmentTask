@@ -5,6 +5,18 @@
     <title>Title</title>
 </head>
 <body>
+<form   id = "createSU" th:method="POST" th:action="@{/admin/ServicedUsers/cr}" th:object="${servUdto}">
+    <h2> оформление оказанной услуги</h2>
 
+    <label for="username" >Ввод username</label>
+    <input type="text" id="username" th:field="*{username}">
+
+    <label for="servicename" > Ввод servicename</label>
+    <input type="text" id="servicename" th:field="*{servicename}" >
+
+    <label for="status" > Ввод status</label>
+    <input type="text" id="status" th:field="*{status}" >
+    <input type="submit"  form="createSU" value="добавить">
+</form>
 </body>
 </html>

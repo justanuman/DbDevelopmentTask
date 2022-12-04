@@ -13,7 +13,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-@Component
+
 @PropertySource("classpath:application.properties")
 public class TokenManager implements Serializable {
     //@Value("${tokenManager.lifespan}")

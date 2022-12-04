@@ -5,6 +5,24 @@
     <title>Title</title>
 </head>
 <body>
+<table  border="1" >
+    <tr>
+        <th>номер транзакции </th>
+        <th>покупатель</th>
+        <th>услуга</th>
+        <th>статус</th>
 
+    </tr>
+    <tr
+            th:each="servUsersTableDTO, iStat : ${servUsersTableDTOs}"
+            th:style="${iStat.odd}? 'font-weight: bold;'"
+            th:alt-title="${iStat.even}? 'even' : 'odd'">
+        <td th:text="${servUsersTableDTO.id}">ид</td>
+        <td th:text="${servUsersTableDTO.username}">покупатель </td>
+        <td th:text="${servUsersTableDTO.servicename}">услуга</td>
+        <td th:text="${servUsersTableDTO.status}">status</td>
+
+    </tr>
+</table>
 </body>
 </html>

@@ -5,6 +5,29 @@
     <title>Title</title>
 </head>
 <body>
+<nav th:fragment="navbar" class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <a class="navbar-brand" th:href="@{/admin/Room}">Подменю управления комнатами</a>
+        </div>
+    </div>
+</nav>
+<form   id = "updR" th:method="POST" th:action="@{/admin/Room/upd}" th:object="${roomUpdDto}">
+    <h2> ВВОД НОВОЙ КОМНАТЫ</h2>
+    <label for="ID" >Ввод ID </label>
+    <input type="text" id="ID" th:field="*{id}">
 
+    <label for="size" >Ввод size</label>
+    <input type="number" id="size" th:field="*{size}">
+
+
+    <label for="rate" > Ввод rate</label>
+    <input type="text" id="rate" th:field="*{rate}" >
+
+    <label for="info" > Ввод info</label>
+    <input type="text" id="info" th:field="*{info}" >
+
+    <input type="submit"  form="updR" value="добавить">
+</form>
 </body>
-</html>
+</html>l>
