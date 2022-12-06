@@ -26,18 +26,18 @@ public class ReservationService implements IReservationService {
 
     @Override
     public DbReservation reserveARoom(DbReservationDto dbReservationDto) {
-       // List<DbReservation> activeReservationsInRoom = dbReservationDAO.findAllByRoomNumberAndDepartBeforeAndStatusEquals(dbReservationDto.getRoomNumber(),dbReservationDto.getArrival(),"OPEN");
-       // if(activeReservationsInRoom.isEmpty()){
+        List<DbReservation> activeReservationsInRoom = dbReservationDAO.findAllByRoomNumberAndDepartBeforeAndStatusEquals(dbReservationDto.getRoomNumber(), Timestamp.valueOf(dbReservationDto.getArrival()),"OPEN");
+       if(activeReservationsInRoom.isEmpty()){
         DbReservation dbReservation = DbReservation.builder()
-                    //.arrival(Timestamp.valueOf(dbReservationDto.getArrival()))
-                   // .depart(Timestamp.valueOf(dbReservationDto.getDepart()))
+                    .arrival(Timestamp.valueOf(dbReservationDto.getArrival()))
+                    .depart(Timestamp.valueOf(dbReservationDto.getDepart()))
                     .numberOfOccupants(dbReservationDto.getNumberOfOccupants())
                     .bookerId(dbReservationDto.getBookerID())
                     .roomNumber(dbReservationDto.getRoomNumber())
                 .status("OPEN")
                 .build();
         return dbReservationDAO.save(dbReservation);
-       // }else {  return null;}
+        }else {  return null;}
 
     }
     @Override

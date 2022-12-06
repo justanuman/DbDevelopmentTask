@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<table  border="1" >
+  <tr>
+    <th>имя</th>
+    <th>фамилия</th>
+    <th>адрес</th>
+    <th>счёт</th>
+  </tr>
+  <tr
+          th:each="userDto, iStat : ${userDtos}"
+          th:style="${iStat.odd}? 'font-weight: bold;'"
+          th:alt-title="${iStat.even}? 'even' : 'odd'">
+    <td th:text="${userDto.firstName}">имя </td>
+    <td th:text="${userDto.lastname}">фамилия</td>
+    <td th:text="${userDto.addr}">адрес</td>
+    <td th:text="${userDto.bill}">счёт</td>
+
+  </tr>
+</table>
+</body>
+</html>

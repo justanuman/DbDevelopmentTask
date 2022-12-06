@@ -17,7 +17,7 @@
     </div>
 </nav>
 <form   id = "delF" th:action="@{/admin/Reservation/del}" th:object="${id}" th:method="delete">
-    <h2> ВВОД ОЙДИ для удаления</h2>
+    <h2> ВВОД id для удаления</h2>
     <label for="id" >Ввод ID </label>
     <input type="text" id="id" th:field="*{id}">
     <input type="submit"  form="delF" value="удалить">

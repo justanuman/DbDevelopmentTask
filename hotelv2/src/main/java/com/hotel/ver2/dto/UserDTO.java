@@ -11,4 +11,5 @@ public class UserDTO {
      String firstName;
      String lastname;
      String addr;
+     String bill;
 }

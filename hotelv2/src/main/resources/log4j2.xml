@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration status="warn">
     <Properties>
-        <Property name="basePath">C:\Users\user\Documents\GitHub\DbDevelopmentTask\hotelv2</Property>
+        <Property name="basePath">C:\Users\iagud\OneDrive\Рабочий стол\DbDevelopmentTask\hotelv2</Property>
     </Properties>
     <Appenders>
         <RollingFile name="fileLogger"

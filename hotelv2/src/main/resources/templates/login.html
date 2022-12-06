@@ -9,7 +9,8 @@
     <title>Login</title>
 </head>
 <body>
-    <form th:action="@{/admin/login}" method="post" class="userDto">
+
+    <form th:action="@{/admin/login}" method="POST" class="userDto">
             <label for="login__username">Username</span></label>
             <input id="login__username" type="text" name="username" class="form__input" placeholder="Username" required>
 
@@ -21,7 +22,7 @@
 
     </form>
 
-
+    <a class="navbar-brand" th:href="@{/admin/registration}">регистрация</a>
 
 </body>
 

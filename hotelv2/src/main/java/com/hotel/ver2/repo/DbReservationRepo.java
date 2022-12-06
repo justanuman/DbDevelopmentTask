@@ -8,6 +8,7 @@ import java.sql.Timestamp;
 import java.util.List;
 
 public interface DbReservationRepo extends PagingAndSortingRepository<DbReservation, Integer> {
+
     List<DbReservation> findAllByBookerId(String id);
     @Query("select d from DbReservation d where d.roomNumber = ?1 and d.status = ?2")
     List<DbReservation> findAllByRoomNumberAndStatusEquals(String number, String open);
@@ -16,4 +17,6 @@ public interface DbReservationRepo extends PagingAndSortingRepository<DbReservat
 
     @Query("select d from DbReservation d where d.roomNumber = ?1 and d.depart < ?2 and d.status = ?3")
     List<DbReservation> findAllByRoomNumberAndDepartBeforeAndStatusEquals(String number, Timestamp freeBefore, String open);
+
+    List<DbReservation> findByBookerIdAndArrivalAndDepartAndRoomNumber(String bookerid, Timestamp arr, Timestamp dep,String num);
 }

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<nav th:fragment="navbar" class="navbar navbar-inverse navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header">
+      <a class="navbar-brand" th:href="@{/admin/Reservation}">Подменю управления бронью(резервациями)</a>
+    </div>
+  </div>
+</nav>
+<form   id = "createF" th:method="POST" th:action="@{/admin/Reservation/calculateReservationPrice}" th:object="${rateInfo}">
+  <h2> вычислить стоимость </h2>
+  <label for="bookerID" >Ввод bookerID </label>
+  <input type="text" id="bookerID" th:field="*{bookerID}">
+
+  <label for="arrival" >Ввод arrival (отключено для тестов)</label>
+  <input type="text" id="arrival" th:field="*{arrival}">
+
+  <label for="depart" >Ввод depart (отключено для тестов) </label>
+  <input type="text" id="depart" th:field="*{depart}">
+
+  <label for="roomNumber" >Ввод roomNumber</label>
+  <input type="text" id="roomNumber" th:field="*{roomNumber}" >
+
+
+
+  <input type="submit"  form="createF" value="добавить">
+</form>
+</body>
+</html>

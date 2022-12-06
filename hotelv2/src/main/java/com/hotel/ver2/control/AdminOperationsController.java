@@ -8,21 +8,23 @@ import com.hotel.ver2.service.impl.RoomsService;
 import com.hotel.ver2.service.impl.ServicesService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Controller
 @Slf4j
+@Transactional
 public class AdminOperationsController {
     @Autowired
     ReservationService reservationService;
@@ -134,8 +136,7 @@ DbReservationRepo reservationRepo;
     }
 
     @GetMapping(
-            value = "/admin/Reservation/findAllByRoomNumberAndDepart",
-            produces = "application/json"
+            value = "/admin/Reservation/findAllByRoomNumberAndDepart"
     )
     public String findAllByRoomNumberAndDepartBeforeAndStatusEqualsForm(Model model) {
         model.addAttribute("reqData", new RoomNumAndDepartDTO());
@@ -154,13 +155,19 @@ DbReservationRepo reservationRepo;
         return "reservations/readReservationTable1";
     }
 
-
     @GetMapping(
-            value = "/admin/Reservation/findAllByBookerIdAndStatusEquals",
-            produces = "application/json"
+            value = "/admin/Reservation/findAll"
+    )
+    public String findAllReserv(Model model) {
+        Iterable<DbReservation> list= reservationRepo.findAll();
+        model.addAttribute("reservDTOs", list);
+        return "reservations/readReservationTable1";
+    }
+    @GetMapping(
+            value = "/admin/Reservation/findAllByBookerIdAndStatusEquals"
     )
 
-    public String findAllByBookerIdAndStatusEquals(Model model) {
+    public String findAllByBookerIdAndStatusEqualsForm(Model model) {
         model.addAttribute("reqData2", new NameStatDto());
         return "reservations/ReadReservationPage2";
     }
@@ -185,17 +192,6 @@ DbReservationRepo reservationRepo;
         List<DbReservation> list= reservationRepo.findAllByRoomNumberAndDepartBeforeAndStatusEquals(roomNum,depart,status);
         return "ReadReservationPage1";
     }*/
-
-    @GetMapping(
-            value = "/admin/Reservation/findAll",
-            produces = "application/json"
-    )
-
-    public String findAll(Model model) {
-        Iterable<DbReservation> list= reservationRepo.findAll();
-        model.addAttribute("reservDTOs", list);
-        return "reservations/readReservationTable1";
-    }
 
 
 
@@ -445,6 +441,8 @@ DbReservationRepo reservationRepo;
                 .firstname(dto.getFirstName())
                 .lastname(dto.getLastname())
                 .addr(dto.getAddr())
+                .bill(BigDecimal.ZERO)
+                .status("OPEN")
                 .build();
         dbUserRepo.save(dbUser);
         log.info("1111111111111111 saved");
@@ -459,12 +457,52 @@ DbReservationRepo reservationRepo;
         return "login";
     }
 
-/*@Autowired
+    @GetMapping("/")
+    public String secondIndex() {
+        return "index";
+    }
+
+@Autowired
 AuthenticationManagerBuilder authentication;
     @PostMapping("/admin/login")
     public String showLogin(@ModelAttribute("user") UserDTO dto) {
-
-        return "redirect:/admin";
+        return "redirect:/admin/";
     }
-*/
+
+    @GetMapping("/admin/procedure")
+    public String showProcedure(Model model)
+    {
+        List<String> list =(dbUserRepo.getBillsOfUsers());
+       List<UserDTO> list2 = new ArrayList<>();
+        for(int i = 0; i<list.size();i=i+1)
+        {
+            UserDTO dto = new UserDTO();
+            String[] strings= list.get(i).split(",");
+            dto.setFirstName(strings[0]);
+            dto.setLastname(strings[1]);
+            dto.setAddr(strings[2]);
+            dto.setBill(strings[3]);
+            list2.add(dto);
+        }
+        model.addAttribute("userDtos", list2);
+        return "userTable";
+    }
+    @GetMapping("/admin/Reservation/calculateReservationPrice")
+
+    public String showRateCalcForm(Model model)
+    {
+        model.addAttribute("rateInfo", new DbReservationDto());
+        return "reservations/rateCalcFrom";
+    }
+    @PostMapping("/admin/Reservation/calculateReservationPrice")
+    public String showRateCalcForm(@ModelAttribute("rateInfo") DbReservationDto dbReservationDto)
+    {
+        DbRoom room = dbRoomRepo.findById(dbReservationDto.getRoomNumber()).orElse(null);
+        DbReservation dbReservation= reservationRepo.findByBookerIdAndArrivalAndDepartAndRoomNumber(dbReservationDto.getBookerID(),
+                Timestamp.valueOf(dbReservationDto.getArrival()),
+                Timestamp.valueOf(dbReservationDto.getDepart()),
+                dbReservationDto.getRoomNumber()).get(0);
+        String result = String.valueOf(dbRoomRepo.rateCalc(room.getRate(), dbReservation.getArrival(),dbReservation.getDepart()).abs());
+        return result;
+    }
 }
